@@ -1,0 +1,108 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+<script>
+    function macFunction(x) {
+        $("#item_view").modal();
+    };
+    $(document).ready(function () {
+        $("#success-alert").hide();
+        $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
+            $("#success-alert").slideUp(500);
+        });
+    });
+</script>
+<div class="container">
+    <div class="mail-box">
+        <aside class="lg-side">
+            <div class="inbox-head">
+                <h3>Entrada/Saída de Veículos</h3>
+            </div>
+            @{
+                <br />
+                if (!string.IsNullOrEmpty(Model.Message))
+                {
+                    <div class="alert alert-success" id="success-alert">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <strong>@Model.Message</strong>
+                    </div>
+                }
+            }
+            <br />
+            <div class="inbox-body">
+
+                <div>
+                    <div>
+                        <div class="container-fluid">
+                            <form method="post">
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label>Carro</label>
+                                        <select class="form-control" name="manobra.IdCarro" asp-items="Model.optionsCarro"></select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Manobrista</label>
+                                        <select class="form-control" name="manobra.IdManobrista" asp-items="Model.optionsManobrista"></select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Tipo</label>
+                                        <select class="form-control" name="manobra.IdTipoManobra" asp-items="Model.optionsTipoManobra"></select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Data/Hora</label>
+                                        <input type='datetime-local' class='form-control' asp-for="manobra.DtInclusao" value="@DateTime.Now" />
+                                        <span class="alert-danger" asp-validation-for="manobra.DtInclusao"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a class="btn btn-primary" asp-page="/Carro/Add">Cadastrar Carro</a>
+                                        <button class="btn btn-primary" type="submit">Adicionar Manobra</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="mail-option">
+                    <table class="table table-inbox table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">CARRO</th>
+                                <th scope="col">MANOBRISTA</th>
+                                <th scope="col">TIPO</th>
+                                <th scope="col">DATA/HORA</th>
+                                <th scope="col">Comando</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.listaManobras)
+                            {
+                                <tr>
+                                    <td>@item.IdManobra</td>
+                                    <td>@Model.listaCarros.Where(a => a.IdCarro == item.IdCarro).Select(b => b.Placa).FirstOrDefault()</td>
+                                    <td>@Model.listaManobristas.Where(a => a.IdManobrista == item.IdManobrista).Select(b => b.Nome).FirstOrDefault()</td>
+                                    <td>@Model.listaTipoManobras.Where(a => a.IdTipoManobra == item.IdTipoManobra).Select(b => b.Descricao).FirstOrDefault()</td>
+                                    <td>@(item.DtInclusao.HasValue ? item.DtInclusao.Value.ToString("dd/MM/yyyy HH:mm") : "(Data vazia)")</td>
+                                    <td>
+                                        <form method="post">
+                                            <span class="btn-group">
+                                                <button type="submit" class="btn btn-danger" asp-page-handler="Delete" asp-route-id="@item.IdManobra" onclick="return confirm('Deseja realmente excluir esta manobra?');">
+                                                    <span>Excluir</span>
+                                                </button>
+                                            </span>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>

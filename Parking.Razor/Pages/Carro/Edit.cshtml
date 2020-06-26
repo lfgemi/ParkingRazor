@@ -1,0 +1,38 @@
+﻿@page
+@model Parking.Razor.Pages.Carro.EditModel
+@{
+    ViewData["Title"] = "Editar Carro";
+}
+<div>
+    <div>
+        <div class="container-fluid">
+            <h3><strong>Editar Carro</strong></h3>
+            <form method="post">
+                <input asp-for="carro.IdCarro" type="hidden" />
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="carro.Placa"></label>
+                        <input type='text' class='form-control' asp-for="carro.Placa" />
+                        <span class="alert-danger" asp-validation-for="carro.Placa"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="carro.Marca"></label>
+                        <input type='text' class='form-control' asp-for="carro.Marca" />
+                        <span class="alert-danger" asp-validation-for="carro.Marca"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="carro.Modelo"></label>
+                        <input type='text' class='form-control' asp-for="carro.Modelo" />
+                        <span class="alert-danger" asp-validation-for="carro.Modelo"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center col-md-12">
+                        <button class="btn btn-primary" type="submit">Ok</button>
+                        <a class="btn btn-info" onclick="history.go(-1); return false;" href="#">Voltar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

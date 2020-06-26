@@ -1,0 +1,38 @@
+﻿@page
+@model Parking.Razor.Pages.Manobrista.EditModel
+@{
+    ViewData["Title"] = "Editar Manobrista";
+}
+    <div>
+        <div>
+            <div class="container-fluid">
+                <h3><strong>Editar Manobrista</strong></h3>
+                <form method="post">
+                    <input asp-for="manobrista.IdManobrista" type="hidden" />
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label asp-for="manobrista.Nome"></label>
+                            <input type='text' class='form-control' asp-for="manobrista.Nome" />
+                            <span class="alert-danger" asp-validation-for="manobrista.Nome"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="manobrista.Cpf"></label>
+                            <input type='text' class='form-control' asp-for="manobrista.Cpf" />
+                            <span class="alert-danger" asp-validation-for="manobrista.Cpf"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="manobrista.DataNascimento"></label>
+                            <input type='date' class='form-control' asp-for="manobrista.DataNascimento" />
+                            <span class="alert-danger" asp-validation-for="manobrista.DataNascimento"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center col-md-12">
+                            <button class="btn btn-primary" type="submit">Ok</button>
+                            <a class="btn btn-info" asp-page="/Manobrista/Index">Voltar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
